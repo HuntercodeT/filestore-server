@@ -13,6 +13,12 @@ func main() {
 	http.HandleFunc("/file/download", handler.DownloadHandler)
 	http.HandleFunc("/file/update", handler.FileMetaUpdateHandler)
 	http.HandleFunc("/file/delete", handler.FileDeleteHandler)
+
+	http.HandleFunc("/user/signup", handler.SignupHandler)
+	http.HandleFunc("/user/signin", handler.SigninHandler)
+	http.HandleFunc("/user/info", handler.UserInfoHandler)
+
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 	err := http.ListenAndServe(":8880", nil)
 	if err != nil {
 		fmt.Printf("Failed to start server, err:%s", err.Error())
