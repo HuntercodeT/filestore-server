@@ -1,6 +1,7 @@
 <html>
 
 <head>
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
   <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
   <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -67,14 +68,7 @@
 <script lang="javascript">
   window.onload = function () {
     var username = document.getElementById('username');
-    // var token = document.getElementById('token');
-    // var Username = localStorage.getItem("username")
     var token = localStorage.getItem("token");
-    // var expiresTime = localStorage.getItem("expiresTime");
-    // document.write(expiresTime)
-    // console.log(Username)
-    // console.log(localStorage)
-    // console.log(expiresTime)
     $.ajax({
       url: "/user/info?" + queryParams(),
       type: "POST",
@@ -85,6 +79,7 @@
         } else {
           alert(textStatus);
         }
+        window.location.href = '/user/signin';
       },
       success: function (body, textStatus, jqXHR) {
         var resp = JSON.parse(body);
@@ -148,7 +143,8 @@
   }
 
   function toUploadFile() {
-    window.location.href = '/file/upload?' + queryParams();
+    var token = localStorage.getItem("token")
+    window.location.href = '/file/upload?' + queryParams() + "&token="+token;
   }
 
   function downloadFile(durl) {
